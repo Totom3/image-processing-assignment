@@ -8,10 +8,6 @@ import java.awt.image.BufferedImage;
  * @author Frankie
  */
 public class imageProcessor {
-	boolean boxFilterBool = false; //These values will be changed when their respective button is clicked on
-	boolean gaussianFilterBool = false;
-	boolean edgeDetectionBool = false;
-	boolean greyscaledBool = false;
 	
 	imageProcessor() {}
 	
@@ -124,9 +120,14 @@ public class imageProcessor {
 	 * @param gammaSlider
 	 * @return 
 	 */
-	public static BufferedImage gammaCorrection(double gammaSlider, BufferedImage img) {
+	public static BufferedImage gammaCorrectionFilter(double gammaSlider, BufferedImage img) {
 		//formula = Bcorrected = B^gamma
 		//pseudocode: image.getPixel at point x,y = pixelChosen; pixelChosen^gamma = newPixel;, place pixel back in image position, move on 
+		return img;
+	}
+	
+	public static BufferedImage greyscaleFilter(BufferedImage img) {
+		//apply greyscale matrix
 		return img;
 	}
 }
