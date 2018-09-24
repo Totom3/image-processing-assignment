@@ -70,6 +70,9 @@ public class MainPanel extends JPanel {
 		saveButton.addActionListener(ea -> saveImage());
 		applyButton.addActionListener(ea -> applyTransforms());
 		messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		gammaSlider.setMinimum(0);
+		gammaSlider.setMaximum(2000);
+		gammaSlider.setValue(1000);
 
 		JLabel boxLabel = new JLabel("Box Filter:");
 		JLabel gaussianLabel = new JLabel("Gaussian Filter:");
@@ -170,25 +173,26 @@ public class MainPanel extends JPanel {
 
 		// 1. Apply box filter
 		if (boxFilterCheck.isSelected()) {
-			img = imageProcessor.boxFilter(img, 3);
+			img = ImageProcessor.boxFilter(img, 3);
 		}
 
 		// 2. Apply gaussian filter
 		if (gaussianFilterCheck.isSelected()) {
-			img = imageProcessor.gaussianFilter(img);
+			img = ImageProcessor.gaussianFilter(img);
 		}
 
 		// 3. Edge Detection filter
 		if (edgeDetectionCheck.isSelected()) {
-			img = imageProcessor.edgeDetectionFilter(img);
+			img = ImageProcessor.edgeDetectionFilter(img);
 		}
 
 		// 4. Gamma Correction
-		img = imageProcessor.gammaCorrection(gammaSlider.getValue(), img);
+		
+		img = ImageProcessor.gammaCorrectionFilter(gammaSlider.getValue()/1000.0, img);
 
 		// 5. Grayscale
 		if (grayscaleCheck.isSelected()) {
-			// todo
+			img = ImageProcessor.grayscaleFilter(img);
 		}
 
 		modifiedImage.setImage(img);
