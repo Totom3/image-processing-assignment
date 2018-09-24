@@ -10,6 +10,8 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainPanel extends JPanel {
@@ -187,8 +191,7 @@ public class MainPanel extends JPanel {
 		}
 
 		// 4. Gamma Correction
-		
-		img = ImageProcessor.gammaCorrectionFilter(gammaSlider.getValue()/1000.0, img);
+		img = ImageProcessor.gammaCorrectionFilter(gammaSlider.getValue() / 1000.0, img);
 
 		// 5. Grayscale
 		if (grayscaleCheck.isSelected()) {
@@ -200,6 +203,12 @@ public class MainPanel extends JPanel {
 
 	// ============================================================================================
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+			throw new RuntimeException(ex);
+		}
+		
 		JFrame frame = new JFrame();
 		frame.setTitle("Image Processor");
 		frame.setSize(650, 600);
