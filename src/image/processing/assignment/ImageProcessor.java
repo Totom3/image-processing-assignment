@@ -116,19 +116,19 @@ public class ImageProcessor {
 	 * @return
 	 */
 	public static BufferedImage gammaCorrectionFilter(double gammaSlider, BufferedImage img) {
-		for (int x = 0; x < img.getWidth(); ++x) {
+		for (int x = 0; x < img.getWidth(); ++x) { //iterates through each pixel
 			for (int y = 0; y < img.getHeight(); ++y) {
-				int color = img.getRGB(x, y);
+				int color = img.getRGB(x, y); //gets pixel RGB value
 				
-				int red = (color >> 16) & 0xFF;
+				int red = (color >> 16) & 0xFF; //separates into respective red blue and green values
 				int green = (color >> 8) & 0xFF;
 				int blue = (color >> 0) & 0xFF;
 				
-				red = colorRange(Math.pow(red, gammaSlider));
+				red = colorRange(Math.pow(red, gammaSlider)); //increases each color channel value to increase brightness
 				green =  colorRange(Math.pow(green, gammaSlider));
 				blue =  colorRange(Math.pow(blue, gammaSlider));
 				
-				img.setRGB(x, y, (red << 16) | (green << 8) | blue);
+				img.setRGB(x, y, (red << 16) | (green << 8) | blue); //sets new color to each channel value of pixel
 			}
 		}
 		return img;
