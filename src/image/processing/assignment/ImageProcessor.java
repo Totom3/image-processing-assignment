@@ -129,6 +129,7 @@ public class ImageProcessor {
 				blue =  colorRange(Math.pow(blue, gammaSlider));
 				
 				img.setRGB(x, y, (red << 16) | (green << 8) | blue); //sets new color to each channel value of pixel
+				img.setRGB(x, y, (0xFF << 24) | (red << 16) | (green << 8) | blue);
 			}
 		}
 		return img;
