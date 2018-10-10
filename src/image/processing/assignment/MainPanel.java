@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -18,6 +20,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
@@ -41,6 +46,11 @@ public class MainPanel extends JPanel {
 	private final JCheckBox edgeDetectionCheck;
 	private final JCheckBox grayscaleCheck;
 	private final JSlider gammaSlider;
+	private static final JMenuBar menuBar = new JMenuBar();
+	private final JMenu menu;
+	private final JMenuItem saveImageMenuItem;
+	private final JMenuItem openImageMenuItem;
+	private final JMenuItem exitAppMenuItem;
 
 	public MainPanel() {
 		// Instantiate member field
@@ -55,7 +65,32 @@ public class MainPanel extends JPanel {
 		this.edgeDetectionCheck = new JCheckBox();
 		this.grayscaleCheck = new JCheckBox();
 		this.gammaSlider = new JSlider();
-
+		this.menu = new JMenu("File");
+		this.saveImageMenuItem = new JMenuItem("Save Image");
+		this.openImageMenuItem = new JMenuItem("Open Image");
+		this.exitAppMenuItem = new JMenuItem("Exit");
+		
+		saveImageMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				saveImage();
+			}
+		});
+		
+		openImageMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				openImage();
+			}
+		});
+		
+		exitAppMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				System.exit(0);
+			}
+		});
+		
 		initGUI();
 	}
 
@@ -107,7 +142,14 @@ public class MainPanel extends JPanel {
 		add(grayscaleLabel, constr(0, 7, ins));
 		add(grayscaleCheck, constr(1, 7, ins));
 		add(applyButton, constr(0, 8, ins, 2));
+		
+		menuBar.add(menu);
+		menu.add(saveImageMenuItem);
+		menu.add(openImageMenuItem);
+		menu.add(exitAppMenuItem);
 
+		//TO ADD: KEY LISTENERS FOR EACH MENU ITEM, AND PLACE IT IN THE PANEL
+		
 		for (Component comp : this.getComponents()) {
 			if (comp instanceof JLabel) {
 				comp.setFont(FONT_PLAIN);
@@ -214,7 +256,7 @@ public class MainPanel extends JPanel {
 		frame.setSize(650, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setJMenuBar(menuBar);
 		frame.setContentPane(new MainPanel());
 		frame.setVisible(true);
 	}
